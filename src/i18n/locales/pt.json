@@ -1,0 +1,255 @@
+{
+  "header": {
+    "title": "EARTH GUARDIANS",
+    "subtitle": "AMÉRICA DO SUL",
+    "tagline": "Movimento Jovem pelo Clima"
+  },
+  "sections": {
+    "active": "EM EXECUÇÃO",
+    "pipeline": "PIPELINE / ESCRITA",
+    "done": "CONCLUÍDOS"
+  },
+  "filters": {
+    "all": "TODOS",
+    "territory": "TERRITÓRIO",
+    "axis": "EIXO",
+    "category": "CATEGORIA",
+    "year": "ANO"
+  },
+  "territories": {
+    "Brasil": "Brasil",
+    "Equador": "Equador",
+    "Bolívia": "Bolívia"
+  },
+  "axes": {
+    "Arte": "Arte",
+    "Tecnologia": "Tecnologia",
+    "Água": "Água",
+    "Direitos": "Direitos"
+  },
+  "categories": {
+    "culture": "Cultura & Arte",
+    "environmental": "Educação Ambiental",
+    "climate": "Justiça Climática",
+    "restoration": "Restauração",
+    "rights": "Direitos & Social"
+  },
+  "years": {
+    "2024": "2024",
+    "2025": "2025",
+    "2026": "2026",
+    "2027": "2027"
+  },
+  "status": {
+    "pnab": "Em Execução / PNAB",
+    "egGrants": "Em Execução / EG Grants",
+    "cultsp": "Em Execução / CultSP",
+    "virada2026": "Concluído / Virada 2024-2025",
+    "virada2027": "Em Execução / Virada 2027",
+    "active": "Em Execução",
+    "submission": "Submissão",
+    "writing": "Escrita Técnica",
+    "largeScale": "Proposta Grande Escala",
+    "historic": "Concluído / Histórico",
+    "completed": "Concluído",
+    "founder": "Concluído / Projeto Fundador",
+    "award": "Concluído / 2016",
+    "exchange": "Concluído / Intercâmbio",
+    "partnership": "Concluído / Parceria",
+    "advisor": "Concluído / Advisor",
+    "activeBase": "Concluído / Base Ativa",
+    "creativeEconomy": "Concluído / Economia Criativa",
+    "professional": "Concluído / Profissional"
+  },
+  "connections": {
+    "subProject": "Sub-projeto",
+    "research": "Pesquisa Vinculada",
+    "tool": "Ferramenta",
+    "mapping": "Mapeamento",
+    "focusArea": "Área de Foco",
+    "relatedEvent": "Evento Relacionado",
+    "culturalProduction": "Produção Cultural",
+    "evolution": "Evolução",
+    "facilitator": "Facilitadora",
+    "educational": "Atividade Educacional",
+    "tracking": "Tracker's Connection"
+  },
+  "footer": {
+    "coords": "EG_SA // X: {x} // Y: {y}",
+    "tagline": "Resistência | Futuro | Ação",
+    "brandKit": "BRAND KIT",
+    "database": "BASE DE DADOS",
+    "calendar": "CALENDÁRIO MENSAL"
+  },
+  "sidebar": {
+    "territories": "TERRITÓRIOS",
+    "axes": "EIXOS",
+    "categories": "CATEGORIAS",
+    "years": "ANOS"
+  },
+  "project": {
+    "partners": "Parceiros",
+    "role": "EG ROLE",
+    "origin": "Origem",
+    "location": "Local",
+    "type": "Tipo",
+    "status": "Status",
+    "scope": "Escopo",
+    "focus": "Foco",
+    "period": "Período",
+    "result": "Resultado",
+    "achievement": "Conquista",
+    "legacy": "Legado",
+    "sponsorship": "Patrocínio",
+    "production": "Produção",
+    "connection": "Conexão",
+    "base": "Base",
+    "website": "Website",
+    "edition": "Edição",
+    "duration": "Duração",
+    "network": "Rede",
+    "target": "Alvo",
+    "facilitators": "Facilitadores",
+    "award": "Prêmio",
+    "events": "Eventos",
+    "format": "Formato"
+  },
+  "labels": {
+    "estimatedImpact": "Impacto Estimado",
+    "formation": "Formação",
+    "duration": "Duração",
+    "territorialDefense": "Defesa Territorial",
+    "rareEarth": "Terras Raras",
+    "internationalCoverage": "Cobertura Internacional",
+    "grantPhase": "Fase de Grant",
+    "empowerment": "Empoderamento",
+    "livingLab": "Laboratório Vivo",
+    "sustainableFashion": "Moda Sustentável",
+    "founderProject": "Projeto Fundador",
+    "professionalProject": "Projeto Profissional",
+    "communityVictory": "Vitória Comunitária",
+    "award": "Prêmio",
+    "globalNetwork": "Rede Global",
+    "target": "Meta"
+  },
+  "projects": {
+    "p1": {
+      "title": "PRATA CULT",
+      "description": "Profissionalização de jovens (18-29 anos) em música e audiovisual."
+    },
+    "p2": {
+      "title": "OFICINAS SEMANAIS",
+      "description": "Workshops gratuitos: Música, Audiovisual, Agroecologia e Gestão de Projetos na SOS Águas da Prata.",
+      "origin": "Prêmio CultSP - 11 anos de atuação"
+    },
+    "p3": {
+      "title": "BEE GUARDIANS MELIPONARY",
+      "description": "Workshops de meliponicultura (abelhas nativas sem ferrão) com escolas e comunidade."
+    },
+    "p4": {
+      "title": "JARDIM MEDICINAL",
+      "description": "Horta comunitária, atividades escolares, preservação de árvores nativas e frutíferas."
+    },
+    "p4b": {
+      "title": "VIRADA CLIMÁTICA 2027",
+      "description": "4ª Edição - Celebração de 13 Anos de EG South America: 12 dias de atividades socioambientais. Em planejamento/submissão."
+    },
+    "p4c": {
+      "title": "COBERTURA COP30",
+      "description": "Cobertura climática internacional concluída com sucesso em Belém do Pará. Ativação da rede de jovens."
+    },
+    "p5": {
+      "title": "VULCAN OBSERVATORY",
+      "description": "Pesquisa em zonas de sacrifício e impacto da mineração de Terras Raras. Segurança, Defesa e Restauração.",
+      "meta": {
+        "status": "Mapeamento Sul/Centro América",
+        "pillars": "Segurança, Defesa, Restauração"
+      }
+    },
+    "p6": {
+      "title": "MONITORAMENTO CORPOS D'ÁGUA",
+      "description": "Advocacy e pesquisa contínua de corpos d'água, flora e fauna."
+    },
+    "p7": {
+      "title": "KIT AMIGXS DA ÁGUA",
+      "description": "Análise e controle de pH e qualidade da água com kits caseiros e acessíveis."
+    },
+    "p8": {
+      "title": "MAPEAMENTO ZONAS DE SACRIFÍCIO",
+      "description": "Mapeamento inicial de comunidades vulneráveis na América do Sul e Central."
+    },
+    "p9": {
+      "title": "SEGURANÇA RADIOLÓGICA E ALIMENTAR",
+      "description": "Áreas estratégicas de foco do observatório - radiologia e segurança alimentar."
+    },
+    "p10": {
+      "title": "EARTHTRACK",
+      "description": "Conectado ao Vulcan Observatory - ferramentas geohidrográficas para catalogação comunitária de nascentes."
+    },
+    "p11": {
+      "title": "ARTICULAÇÃO UNICEF / FID",
+      "description": "Fomento cultural internacional e agroecologia em escala regional Sul-Americana. Large Global Project."
+    },
+    "p11b": {
+      "title": "DOCUMENTÁRIO PRATA ATIVA",
+      "description": "Base de recursos para estudo do Vulcan Observatory sobre status radiológico."
+    },
+    "p12": {
+      "title": "VIRADA CLIMÁTICA",
+      "description": "Evento inovador: shows, DJs, camping e ativismo socioambiental. 3 edições concluídas com sucesso. Patrocinadores: Alana Institute, Our Kids Climate, GREENPEACE, BhumisparshaSchool."
+    },
+    "p13": {
+      "title": "PROJETO 7K",
+      "description": "Reflorestamento: 7 mil árvores celebrando 7 anos de EG Brasil. Viveiro na SOS Águas da Prata."
+    },
+    "p14": {
+      "title": "XÔ MINERADORAS",
+      "description": "Movimento comunitário contra mineração de bauxita que ameaçava fontes de água."
+    },
+    "p14b": {
+      "title": "A MENSAGEM DA ONÇA",
+      "description": "Videoclipe expondo a crise climática e vozes jovens emergentes. Vencedor do Concurso Curta Prata 2016."
+    },
+    "p15": {
+      "title": "VULCAN FESTIVAL",
+      "description": "Visibilidade internacional e fortalecimento de rede de advocacy via Mídia Ninja."
+    },
+    "p16": {
+      "title": "TRILHANDO CAMINHOS",
+      "description": "Gestão administrativa rural, ervas e direitos sociais para mulheres na comunidade Cascata."
+    },
+    "p16b": {
+      "title": "NANCI FERREIRA",
+      "description": "Facilitadora idosa e ponte comunitária. Conselheira de Saberes do projeto EG Cascata."
+    },
+    "p17": {
+      "title": "BAQUE MULHER",
+      "description": "Movimento de empoderamento feminino através do maracatu. Apresentações em eventos culturais."
+    },
+    "p18": {
+      "title": "SOS - HORTA PARQUE (SAF)",
+      "description": "Sistema agroflorestal como laboratório vivo para projetos de restauração e educação ambiental.",
+      "kpiLabel": "Projetos Ativos"
+    },
+    "p19": {
+      "title": "PRATA PRINT / BHUMISPRINT",
+      "description": "Economia criativa: produtos impressos originais (camisetas, canecas) e reuso de materiais."
+    },
+    "p20": {
+      "title": "O DESPERTAR DAS MATAS",
+      "description": "Circo e teatro com temas socioambientais na escola pública EMEB Áurea Soares."
+    },
+    "p21": {
+      "title": "OFICINA DE MÚSICA",
+      "description": "Projeto carro-chefe do coletivo - oficinas comunitárias gratuitas. Fundação da Banda Impermanente."
+    },
+    "p21b": {
+      "title": "BANDA IMPERMANENTE",
+      "description": "Projeto musical profissional nascido da Oficina de Música. Realiza apresentações e lançamentos."
+    },
+    "p22": {
+      "title": "EARTH DOC",
+      "description": "Documentário com materiais de cobertura da COP30 e todos os eventos: Virada Climática, Vulcan Festival, COBERTURAS e muito mais."
+    }
+  }
+}

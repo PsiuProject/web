@@ -1,0 +1,486 @@
+:root {
+  --color-moss: #3e4c33;
+  --color-moss-light: #6a7d5b;
+  --color-terracotta: #b55d3a;
+  --color-earth: #1a1814;
+  --color-ink: #0d0d0d;
+  --color-paper: #e2ded0;
+  --color-stencil-orange: #ff5f1f;
+  
+  /* Legacy aliases for backward compatibility */
+  --moss: #3e4c33;
+  --moss-light: #6a7d5b;
+  --terracotta: #b55d3a;
+  --earth: #1a1814;
+  --ink: #0d0d0d;
+  --paper: #e2ded0;
+  --stencil-orange: #ff5f1f;
+  
+  --bg-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+
+body {
+  background-color: var(--earth);
+  color: var(--paper);
+  font-family: 'Outfit', sans-serif;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Fibrous Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: var(--bg-texture);
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: overlay;
+}
+
+#app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 4D Canvas Container */
+#viewport {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background: radial-gradient(circle at center, #2a2d24 0%, #0d0d0d 100%);
+  touch-action: none;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  transition: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+
+#canvas.smooth-zoom {
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: auto;
+}
+
+/* Status Section Separators */
+.section-separator {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 1.04vw;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.separator-line {
+  flex: 1;
+  height: 0.1vh;
+  background: var(--sep-color);
+  opacity: 0.4;
+}
+
+.separator-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--sep-color);
+  letter-spacing: 0.21vw;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0.31vh 0.83vw;
+  border: 0.05vw solid var(--sep-color);
+  opacity: 0.6;
+  background: rgba(13, 13, 13, 0.8);
+}
+
+/* Connector Lines for Sub-projects - BEHIND CARDS */
+.connector-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 500vw;
+  height: 500vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.connector-lines * {
+  pointer-events: auto;
+}
+
+/* Disable connection animations during drag for performance */
+body.dragging .connector-lines {
+  display: none;
+}
+
+/* Project cards should be above connections */
+.project-card {
+  z-index: 10;
+  position: absolute;
+  isolation: isolate;
+}
+
+.sidebar {
+  position: fixed;
+  left: 2.08vw;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 1.04vw;
+}
+
+.filter-group {
+  border-left: 0.1vw solid var(--terracotta);
+  padding-left: 0.78vw;
+  margin-bottom: 1.04vw;
+}
+
+.filter-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--terracotta);
+  margin-bottom: 0.42vh;
+  letter-spacing: 0.1vw;
+}
+
+.filter-btn {
+  display: block;
+  background: none;
+  border: none;
+  color: var(--paper);
+  font-size: 0.9rem;
+  text-align: left;
+  margin: 0.26vh 0;
+  opacity: 0.6;
+  transition: all 0.3s;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  opacity: 1;
+  padding-left: 0.52vw;
+  color: var(--stencil-orange);
+}
+
+/* Card Architecture - Stencil Style */
+.project-card {
+  position: absolute;
+  background: var(--ink);
+  border: 0.05vw solid rgba(255,255,255,0.1);
+  padding: 1.56vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1), border-color 0.3s, transform 0.3s;
+  box-shadow: 1.04vw 1.04vw 3.13vw rgba(0,0,0,0.5);
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 95% 100%, 0 100%);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  min-height: 280px;
+  box-sizing: border-box;
+}
+
+/* Disable transitions during drag for performance */
+body.dragging .project-card {
+  transition: none;
+  pointer-events: none;
+}
+
+body.dragging #canvas {
+  cursor: grabbing;
+}
+
+.project-card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 2.08vw; height: 2.08vw;
+  background: var(--moss);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  opacity: 0.5;
+}
+
+.project-card:hover {
+  z-index: 100;
+  border-color: var(--terracotta);
+}
+
+.project-card.hover-lift {
+  transform: translateZ(2.6vw) scale(1.05) !important;
+}
+
+.status-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  background: var(--terracotta);
+  color: var(--ink);
+  padding: 0.21vh 0.42vw;
+  width: fit-content;
+  margin-bottom: 1.04vw;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status-tag.tag-active { background: var(--stencil-orange); color: var(--ink); }
+.status-tag.tag-pipeline { background: var(--moss); color: var(--paper); }
+.status-tag.tag-done { background: var(--terracotta); color: var(--paper); }
+
+.title {
+  font-size: 1.8rem;
+  line-height: 1.1;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  color: var(--paper);
+  word-spacing: -0.26vw;
+  flex-shrink: 0;
+}
+
+.description {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  opacity: 0.85;
+  flex-grow: 1;
+  min-height: 3rem;
+}
+
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.78vw;
+  margin-top: 1.04vw;
+  font-size: 0.75rem;
+  border-top: 0.05vw solid rgba(255,255,255,0.1);
+  padding-top: 0.78vw;
+}
+
+.meta-item label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  color: var(--moss-light);
+  margin-bottom: 0.21vh;
+  text-transform: uppercase;
+}
+
+.kpi-box {
+  background: rgba(106, 125, 91, 0.1);
+  border-left: 0.16vw solid var(--moss);
+  padding: 0.52vw;
+  margin-top: 1.04vw;
+}
+
+.kpi-value {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--stencil-orange);
+  font-weight: 700;
+}
+
+/* Dynamic Sizes - Used as fallback only */
+.card-lg { min-width: 20vw; min-height: 40vh; }
+.card-md { min-width: 16vw; min-height: 30vh; }
+.card-sm { min-width: 12vw; min-height: 22vh; }
+
+/* Navigation Header */
+header {
+  position: fixed;
+  top: 2.08vw;
+  left: 2.08vw;
+  right: 2.08vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+header * { pointer-events: auto; }
+
+.logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.05vw;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.logo span { color: var(--terracotta); }
+
+.nav-sections {
+  display: flex;
+  gap: 1.56vw;
+}
+
+.nav-link {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 0.52vh 1.04vw;
+  border: 0.05vw solid var(--moss);
+  transition: 0.3s;
+}
+
+.nav-link:hover {
+  background: var(--moss);
+}
+
+.nav-link.nav-active {
+  background: var(--terracotta);
+  color: var(--ink);
+  border-color: var(--terracotta);
+}
+
+/* Footer Overlay */
+footer {
+  position: fixed;
+  bottom: 2.08vw;
+  left: 2.08vw;
+  right: 2.08vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 1000;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  pointer-events: none;
+}
+
+footer * { pointer-events: auto; }
+
+.footer-links a {
+  color: var(--paper);
+  text-decoration: none;
+  margin-right: 1.04vw;
+  opacity: 0.5;
+}
+
+.footer-links a:hover { opacity: 1; color: var(--terracotta); }
+
+.coordinate-display {
+  color: var(--moss-light);
+  text-transform: uppercase;
+}
+
+/* Floating Elements */
+.stencil-deco {
+  position: absolute;
+  font-size: 15rem;
+  font-weight: 900;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+  line-height: 0.8;
+  color: white;
+}
+
+/* Sub-project Cards */
+.sub-project {
+  border-left: 0.16vw solid var(--terracotta);
+  opacity: 0.85;
+}
+
+.sub-project:hover {
+  opacity: 1;
+}
+
+.sub-project-indicator {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--terracotta);
+  letter-spacing: 0.1vw;
+  margin-top: 0.52vw;
+  text-transform: uppercase;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* Canvas Layer System - for smooth transitions between views */
+.canvas-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  transition: none;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.canvas-layer.smooth-zoom {
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: auto;
+}
+
+#detail-canvas {
+  width: 125vw;
+  height: 129.63vh;
+  z-index: 1000;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+  opacity: 0;
+}
+
+#detail-canvas.active {
+  opacity: 1;
+}
+
+#detail-canvas.entering {
+  animation: zoomIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes zoomIn {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--start-x, 0px), var(--start-y, 0px), 0) scale(0.85);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(var(--end-x, 0px), var(--end-y, 0px), 0) scale(1);
+  }
+}
+
+/* Smooth card transitions */
+.project-card {
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s;
+  will-change: opacity;
+}
+
+.project-card:active {
+  transform: scale(0.98) !important;
+}
+
+/* Disable transitions during drag for performance */
+body.dragging .project-card {
+  transition: none;
+  will-change: auto;
+  pointer-events: none;
+}
+
+body.dragging #canvas {
+  cursor: grabbing;
+}

@@ -1,0 +1,236 @@
+{
+  "header": {
+    "title": "EARTH GUARDIANS",
+    "subtitle": "SOUTH AMERICA",
+    "tagline": "Youth Climate Movement"
+  },
+  "sections": {
+    "active": "IN PROGRESS",
+    "pipeline": "PIPELINE / WRITING",
+    "done": "COMPLETED"
+  },
+  "filters": {
+    "all": "ALL",
+    "territory": "TERRITORY",
+    "axis": "AXIS",
+    "category": "CATEGORY"
+  },
+  "territories": {
+    "Brasil": "Brazil",
+    "Equador": "Ecuador",
+    "Bolívia": "Bolivia"
+  },
+  "axes": {
+    "Arte": "Art",
+    "Tecnologia": "Technology",
+    "Água": "Water",
+    "Direitos": "Rights"
+  },
+  "categories": {
+    "culture": "Culture & Art",
+    "environmental": "Environmental Education",
+    "climate": "Climate Justice",
+    "restoration": "Restoration",
+    "rights": "Rights & Social"
+  },
+  "status": {
+    "pnab": "In Progress / PNAB",
+    "egGrants": "In Progress / EG Grants",
+    "virada2026": "In Progress / Virada 2026",
+    "active": "In Progress",
+    "submission": "Submission",
+    "writing": "Technical Writing",
+    "largeScale": "Large-Scale Proposal",
+    "historic": "Completed / Historic",
+    "completed": "Completed / 2021-2024",
+    "award": "Completed / 2016",
+    "exchange": "Completed / Exchange",
+    "partnership": "Completed / Partnership",
+    "advisor": "Completed / Advisor",
+    "activeBase": "Completed / Active Base",
+    "creativeEconomy": "Completed / Creative Economy",
+    "professional": "Completed / Professional"
+  },
+  "connections": {
+    "subProject": "Sub-project",
+    "research": "Linked Research",
+    "tool": "Tool",
+    "mapping": "Mapping",
+    "focusArea": "Focus Area",
+    "relatedEvent": "Related Event",
+    "culturalProduction": "Cultural Production",
+    "evolution": "Evolution",
+    "facilitator": "Facilitator",
+    "educational": "Educational Activity"
+  },
+  "footer": {
+    "coords": "EG_SA // X: {x} // Y: {y}",
+    "tagline": "Resistance | Future | Action",
+    "brandKit": "BRAND KIT",
+    "database": "DATABASE",
+    "calendar": "MONTHLY CALENDAR"
+  },
+  "sidebar": {
+    "territories": "TERRITORIES",
+    "axes": "AXES",
+    "categories": "CATEGORIES"
+  },
+  "project": {
+    "partners": "Partners",
+    "role": "EG Role",
+    "origin": "Origin",
+    "location": "Location",
+    "type": "Type",
+    "status": "Status",
+    "scope": "Scope",
+    "focus": "Focus",
+    "period": "Period",
+    "result": "Result",
+    "achievement": "Achievement",
+    "legacy": "Legacy",
+    "sponsorship": "Sponsorship",
+    "production": "Production",
+    "connection": "Connection",
+    "base": "Base",
+    "website": "Website",
+    "edition": "Edition",
+    "duration": "Duration",
+    "network": "Network",
+    "target": "Target",
+    "facilitators": "Facilitators"
+  },
+  "labels": {
+    "estimatedImpact": "Estimated Impact",
+    "formation": "Formation",
+    "duration": "Duration",
+    "territorialDefense": "Territorial Defense",
+    "rareEarth": "Rare Earth",
+    "internationalCoverage": "International Coverage",
+    "grantPhase": "Grant Phase",
+    "empowerment": "Empowerment",
+    "livingLab": "Living Lab",
+    "sustainableFashion": "Sustainable Fashion",
+    "founderProject": "Founder Project",
+    "professionalProject": "Professional Project",
+    "communityVictory": "Community Victory",
+    "award": "Award",
+    "globalNetwork": "Global Network",
+    "target": "Target"
+  },
+  "projects": {
+    "p1": {
+      "title": "PRATA CULT",
+      "description": "Professionalization of youth (18-29 years) in music and audiovisual."
+    },
+    "p2": {
+      "title": "WEEKLY WORKSHOPS",
+      "description": "Free workshops: Music, Audiovisual, Agroecology and Project Management at SOS Águas da Prata.",
+      "origin": "Oficina de Música e Meio Ambiente"
+    },
+    "p3": {
+      "title": "BEE GUARDIANS MELIPONARY",
+      "description": "Meliponiculture workshops (native stingless bees) with schools and community."
+    },
+    "p4": {
+      "title": "MEDICINAL GARDEN",
+      "description": "Community garden, school activities, native trees and fruit preservation."
+    },
+    "p4b": {
+      "title": "VIRADA CLIMÁTICA 2026",
+      "description": "12 Years of EG South America Celebration: 12 days of socio-environmental activities."
+    },
+    "p4c": {
+      "title": "COP 30 COVERAGE",
+      "description": "International climate coverage and youth advocacy network for COP30 in Belém."
+    },
+    "p5": {
+      "title": "VULCAN OBSERVATORY",
+      "description": "Research on sacrifice zones and Rare Earth mining impact. Security, Defense and Restoration.",
+      "meta": {
+        "status": "Mapping South/Central America",
+        "pillars": "Security, Defense, Restoration"
+      }
+    },
+    "p6": {
+      "title": "WATER BODIES MONITORING",
+      "description": "Continuous advocacy and research on water bodies, flora and fauna."
+    },
+    "p7": {
+      "title": "KIT AMIGXS DA ÁGUA",
+      "description": "Analysis and control of pH and water quality with homemade and accessible kits."
+    },
+    "p8": {
+      "title": "SACRIFICE ZONES MAPPING",
+      "description": "Initial mapping of vulnerable communities across South and Central America."
+    },
+    "p9": {
+      "title": "RADIOLOGICAL & FOOD SAFETY",
+      "description": "Strategic focus areas of the observatory - radiological and food safety."
+    },
+    "p10": {
+      "title": "ECOTRACK MAPBIOMAS",
+      "description": "Geohydrographic tools for community spring cataloging and watershed monitoring."
+    },
+    "p11": {
+      "title": "UNICEF / FID ARTICULATION",
+      "description": "International cultural fostering and agroecology at South American regional scale."
+    },
+    "p11b": {
+      "title": "DOCUMENTARY PRATA ATIVA",
+      "description": "Resource base for Vulcan Observatory - radiological status of Brazil's most targeted Rare Earth area."
+    },
+    "p13": {
+      "title": "VIRADA CLIMÁTICA (3 EDIÇÕES)",
+      "description": "Innovative event: concerts, DJs, camping and socio-environmental activism. 3 successful editions."
+    },
+    "p14": {
+      "title": "PROJETO 7K",
+      "description": "Reforestation: 7 thousand trees celebrating 7 years of EG Brazil. Nursery at SOS Águas da Prata."
+    },
+    "p15": {
+      "title": "XÔ MINERADORAS",
+      "description": "Community uprising against bauxite mining that threatened water sources. Base for Vulcan Observatory."
+    },
+    "p15b": {
+      "title": "A MENSAGEM DA ONÇA",
+      "description": "Music video exposing climate crises and rising youth voices. Winner of Concurso Curta Prata 2016."
+    },
+    "p17": {
+      "title": "VULCAN FESTIVAL",
+      "description": "International visibility and advocacy network strengthening via Mídia Ninja."
+    },
+    "p18": {
+      "title": "TRILHANDO CAMINHOS",
+      "description": "Rural administrative management, herbs and social rights for women at Cascata community."
+    },
+    "p18b": {
+      "title": "NANCI FERREIRA",
+      "description": "Elderly facilitator and community bridge. Wisdom Adviser for EG Cascata project."
+    },
+    "p19": {
+      "title": "BAQUE MULHER",
+      "description": "Female-only empowerment movement through maracatu. Performances at cultural events."
+    },
+    "p20": {
+      "title": "SOS - HORTA PARQUE (SAF)",
+      "description": "Agroforestry System (SAF) as living lab for restoration and environmental education projects.",
+      "kpiLabel": "Active Projects"
+    },
+    "p21": {
+      "title": "PRATA PRINT / BHUMISPRINT",
+      "description": "Creative economy: original printed goods (t-shirts, mugs) and material reuse."
+    },
+    "p22": {
+      "title": "O DESPERTAR DAS MATAS",
+      "description": "Circus and theater with socio-environmental themes at EMEB Áurea Soares public school."
+    },
+    "p22b": {
+      "title": "OFICINA DE MÚSICA",
+      "description": "Collective's flagship project - free community workshops. Foundation for Banda Impermanente."
+    },
+    "p22c": {
+      "title": "BANDA IMPERMANENTE",
+      "description": "Professional music project born from Oficina de Música. Performs and releases professional work."
+    }
+  }
+}
