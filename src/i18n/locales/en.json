@@ -299,5 +299,37 @@
     "example": {
       "axis": "Art & Culture"
     }
+  },
+
+  "editor": {
+    "tools": "TOOLS",
+    "select": "Select",
+    "card": "Card",
+    "text": "Text",
+    "image": "Image",
+    "link": "Link",
+    "note": "Note",
+    "connection": "Connection",
+    "connectionType": "CONNECTION TYPE",
+    "quickAdd": "QUICK ADD",
+    "actions": "ACTIONS",
+    "save": "Save",
+    "undo": "Undo",
+    "redo": "Redo",
+    "reset": "Reset",
+    "properties": "PROPERTIES",
+    "title": "Title",
+    "description": "Description",
+    "readOnly": "Read Only",
+    "editCanvas": "Edit Canvas"
+  },
+
+  "connections": {
+    "subProject": "Sub Project",
+    "related": "Related",
+    "inspiration": "Inspiration",
+    "evolution": "Evolution",
+    "dependency": "Dependency",
+    "reference": "Reference"
   }
 }

@@ -1,9 +1,25 @@
 <template>
   <div class="project-detail-canvas">
-    <!-- Back button -->
-    <button class="back-button" @click="$emit('close')">
-      <span class="back-arrow">&larr;</span> VOLTAR
-    </button>
+    <!-- Canvas View (Full Screen Editor) -->
+    <ProjectCanvasView
+      v-if="showCanvasView"
+      :project="project"
+      :showCanvas="true"
+      @close="$emit('close')"
+      @toggle-view="toggleViewMode"
+    />
+    
+    <!-- Traditional Detail View -->
+    <template v-else>
+      <!-- Back button -->
+      <button class="back-button" @click="$emit('close')">
+        <span class="back-arrow">&larr;</span> VOLTAR
+      </button>
+      
+      <!-- Edit Canvas Button (for editors) -->
+      <button v-if="canEdit" class="edit-canvas-btn" @click="toggleViewMode">
+        🎨 {{ $t('editor.editCanvas') }}
+      </button>
 
     <!-- Active collaborators presence -->
     <div v-if="realtimeStore.activeUsers.length > 0" class="presence-bar">
@@ -314,6 +330,7 @@
         </div>
       </div>
     </div>
+    </template>
   </div>
 </template>
 
@@ -328,6 +345,7 @@ import { useContentBlocksStore } from '../stores/contentBlocksStore'
 import { useRealtimeStore } from '../stores/realtimeStore'
 import InlineEdit from './InlineEdit.vue'
 import LinkChip from './LinkChip.vue'
+import ProjectCanvasView from './ProjectCanvasView.vue'
 import { queueTranslation, translateBlock, saveToGlossary } from '../lib/translationService'
 
 const { t, te, locale } = useI18n()
@@ -353,6 +371,11 @@ const hoveredBlock = ref(null)
 const inviteEmail = ref('')
 const inviteRole = ref('viewer')
 const currentPrivacy = ref(props.project.privacy || 'private')
+const showCanvasView = ref(false)
+
+function toggleViewMode() {
+  showCanvasView.value = !showCanvasView.value
+}
 
 function displayText(value) {
   if (!value) return ''
@@ -588,6 +611,28 @@ async function removeMember(memberId) {
 
 .back-arrow {
   font-size: 1.1rem;
+}
+
+.edit-canvas-btn {
+  position: absolute;
+  top: 20px;
+  right: 80px;
+  background: var(--moss);
+  border: none;
+  color: var(--paper);
+  padding: 8px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-transform: uppercase;
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.edit-canvas-btn:hover {
+  background: var(--moss-light);
+  color: var(--ink);
 }
 
 /* Presence bar */
