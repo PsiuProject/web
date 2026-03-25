@@ -29,6 +29,11 @@ export const useMembersStore = defineStore('members', {
       return members.some(m => m.user_id === userId && (m.role === 'editor' || m.role === 'owner'))
     },
 
+    canComment: (state) => (projectId, userId) => {
+      const members = state.members[projectId] || []
+      return members.some(m => m.user_id === userId && (m.role === 'commenter' || m.role === 'editor' || m.role === 'owner'))
+    },
+
     canEdit: (state) => (projectId, userId, ownerId) => {
       if (userId === ownerId) return true
       const members = state.members[projectId] || []

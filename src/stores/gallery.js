@@ -398,8 +398,9 @@ export const useGalleryStore = defineStore('gallery', {
       const baseWidth = 240
       const padding = 30
 
-      const titleLength = (project.titleKey || project.title || '').length || 20
-      const descLength = (project.descriptionKey || project.description || '').length || 50
+      const resolveText = (v) => typeof v === 'object' && v !== null ? (v.pt || v.en || '') : (v || '')
+      const titleLength = resolveText(project.titleKey || project.title).length || 20
+      const descLength = resolveText(project.descriptionKey || project.description).length || 50
       const metaCount = project.meta ? project.meta.length : 0
       const hasKpi = project.kpiValue ? 1 : 0
 

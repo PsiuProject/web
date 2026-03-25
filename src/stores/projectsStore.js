@@ -32,12 +32,12 @@ export const useProjectsStore = defineStore('projects', {
     galleryProjects: (state) => {
       return state.projects.map(p => ({
         id: p.id,
-        type: p.status,                // active | pipeline | done
+        type: p.status,
         size: p.size || 'card-md',
         year: p.year,
         statusTagKey: p.status_tag || `status.${p.status}`,
-        titleKey: p.title,             // Direct text now, not i18n key
-        descriptionKey: p.description, // Direct text now, not i18n key
+        titleKey: p.title,        // JSONB {pt,en} or legacy string
+        descriptionKey: p.description,
         territory: p.territory || 'Brasil',
         axis: p.axis || [],
         category: p.category,
@@ -49,10 +49,10 @@ export const useProjectsStore = defineStore('projects', {
         parentId: p.parent_id,
         connectionTypeKey: p.connection_type,
         privacy: p.privacy || 'private',
+        share_slug: p.share_slug || null,
         owner_id: p.owner_id,
         position_x: p.position_x || 0,
         position_y: p.position_y || 0,
-        // Keep raw data for editing
         _raw: p
       }))
     }
@@ -97,7 +97,7 @@ export const useProjectsStore = defineStore('projects', {
     useFallbackData() {
       this.projects = fallbackData.map(p => ({
         id: p.id,
-        title: p.titleKey,
+        title: p.titleKey,        // i18n key string — displayText handles it
         description: p.descriptionKey,
         status: p.type,
         status_tag: p.statusTagKey,
@@ -114,8 +114,8 @@ export const useProjectsStore = defineStore('projects', {
         kpi_detail: p.kpiDetail,
         meta: p.meta,
         links: p.links || [],
-        position_x: p.position?.left || 0,
-        position_y: p.position?.top || 0,
+        position_x: 0,
+        position_y: 0,
         owner_id: null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
@@ -221,6 +221,15 @@ export const useProjectsStore = defineStore('projects', {
     // Update privacy setting
     async updatePrivacy(id, privacy) {
       return this.updateProject(id, { privacy })
+    },
+
+    // Generate a funny readable slug and save it to the project
+    async generateShareSlug(id) {
+      const adjectives = ['cosmic','ancient','wild','silent','burning','frozen','golden','shadow','crystal','thunder']
+      const nouns = ['jaguar','river','forest','volcano','condor','serpent','moon','storm','root','ember']
+      const slug = `${adjectives[Math.floor(Math.random()*adjectives.length)]}-${nouns[Math.floor(Math.random()*nouns.length)]}-${Math.random().toString(36).slice(2,6)}`
+      await this.updateProject(id, { share_slug: slug })
+      return slug
     },
 
     // Subscribe to realtime changes - only if Supabase is configured

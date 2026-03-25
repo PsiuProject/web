@@ -23,19 +23,23 @@
 
     <InlineEdit
       :modelValue="displayText(project.titleKey)"
+      :rawValue="project._raw?.title"
       tag="h2"
       displayClass="title"
       :canEdit="canEdit"
       @save="(val) => saveField('title', val)"
+      @save-translation="(t) => saveTranslation('title', t)"
     />
 
     <InlineEdit
       :modelValue="displayText(project.descriptionKey)"
+      :rawValue="project._raw?.description"
       tag="p"
       displayClass="description"
       :multiline="true"
       :canEdit="canEdit"
       @save="(val) => saveField('description', val)"
+      @save-translation="(t) => saveTranslation('description', t)"
     />
 
     <div v-if="project.kpiLabelKey" class="kpi-box">
@@ -75,8 +79,9 @@ import { useProjectsStore } from '../stores/projectsStore'
 import { useAuthStore } from '../stores/auth'
 import InlineEdit from './InlineEdit.vue'
 import LinkChip from './LinkChip.vue'
+import { queueTranslation, saveToGlossary } from '../lib/translationService'
 
-const { t, te } = useI18n()
+const { t, te, locale } = useI18n()
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -90,13 +95,11 @@ const cardRef = ref(null)
 const isHovered = ref(false)
 const isDragging = ref(false)
 
-// Display text: try i18n key first, then use raw value
+// Display text: JSONB object → pick locale, i18n key → translate, raw string → as-is
 function displayText(value) {
   if (!value) return ''
-  // If it looks like an i18n key (contains dots), try translating
-  if (typeof value === 'string' && value.includes('.') && te(value)) {
-    return t(value)
-  }
+  if (typeof value === 'object') return value[locale.value] ?? value['pt'] ?? value['en'] ?? ''
+  if (typeof value === 'string' && value.includes('.') && te(value)) return t(value)
   return value
 }
 
@@ -192,6 +195,22 @@ function handleDragStart(e) {
 
 async function saveField(field, value) {
   if (!props.project._raw) return
-  await projectsStore.updateProject(props.project.id, { [field]: value })
+  const current = (typeof props.project._raw[field] === 'object' && props.project._raw[field] !== null)
+    ? props.project._raw[field]
+    : {}
+  const merged = { ...current, [locale.value]: value }
+  await projectsStore.updateProject(props.project.id, { [field]: merged })
+  queueTranslation(props.project.id, field, value, locale.value)
+}
+
+// Patches only one lang in the JSONB — no re-translation triggered
+async function saveTranslation(field, { lang, text }) {
+  if (!props.project._raw) return
+  const current = props.project._raw[field] ?? {}
+  await projectsStore.updateProject(props.project.id, { [field]: { ...current, [lang]: text } })
+  // Save to glossary so auto-translation never overwrites this
+  const sourceLang = locale.value
+  const sourceText = current[sourceLang]
+  if (sourceText) saveToGlossary(sourceText, sourceLang, text, lang)
 }
 </script>

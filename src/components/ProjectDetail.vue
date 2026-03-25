@@ -28,22 +28,26 @@
 
           <InlineEdit
             :modelValue="displayText(project.titleKey)"
+            :rawValue="project._raw?.title"
             tag="h1"
             displayClass="detail-title"
             :canEdit="canEdit"
             :editedBy="realtimeStore.isFieldBeingEdited('title')?.userName"
             @save="(val) => saveField('title', val)"
+            @save-translation="(t) => saveTranslation('title', t)"
             @editing="(v) => broadcastEditing('title', v)"
           />
 
           <InlineEdit
             :modelValue="displayText(project.descriptionKey)"
+            :rawValue="project._raw?.description"
             tag="p"
             displayClass="detail-description"
             :multiline="true"
             :canEdit="canEdit"
             :editedBy="realtimeStore.isFieldBeingEdited('description')?.userName"
             @save="(val) => saveField('description', val)"
+            @save-translation="(t) => saveTranslation('description', t)"
             @editing="(v) => broadcastEditing('description', v)"
           />
 
@@ -129,18 +133,20 @@
           <!-- Text block -->
           <template v-if="block.type === 'text'">
             <InlineEdit
-              :modelValue="block.content"
+              :modelValue="displayText(block.content)"
+              :rawValue="typeof block.content === 'object' ? block.content : null"
               tag="div"
               displayClass="block-text"
               :multiline="true"
               :canEdit="canEdit"
               @save="(val) => updateBlock(block.id, { content: val })"
+              @save-translation="(t) => updateBlockTranslation(block.id, block.content, t)"
             />
           </template>
 
           <!-- Image block -->
           <template v-if="block.type === 'image'">
-            <img v-if="block.url" :src="block.url" :alt="block.content || 'Image'" class="block-image" />
+            <img v-if="block.url" :src="block.url" :alt="displayText(block.content) || 'Image'" class="block-image" />
             <InlineEdit
               v-if="canEdit"
               :modelValue="block.url || ''"
@@ -151,18 +157,20 @@
               @save="(val) => updateBlock(block.id, { url: val })"
             />
             <InlineEdit
-              :modelValue="block.content || ''"
+              :modelValue="displayText(block.content)"
+              :rawValue="typeof block.content === 'object' ? block.content : null"
               tag="div"
               displayClass="block-caption"
               placeholder="Caption..."
               :canEdit="canEdit"
               @save="(val) => updateBlock(block.id, { content: val })"
+              @save-translation="(t) => updateBlockTranslation(block.id, block.content, t)"
             />
           </template>
 
           <!-- Link block - auto chip -->
           <template v-if="block.type === 'link'">
-            <LinkChip v-if="block.url" :url="block.url" :label="block.content" />
+            <LinkChip v-if="block.url" :url="block.url" :label="displayText(block.content)" />
             <InlineEdit
               v-if="canEdit"
               :modelValue="block.url || ''"
@@ -173,12 +181,14 @@
               @save="(val) => updateBlock(block.id, { url: val })"
             />
             <InlineEdit
-              :modelValue="block.content || ''"
+              :modelValue="displayText(block.content)"
+              :rawValue="typeof block.content === 'object' ? block.content : null"
               tag="div"
               displayClass="block-link-label"
               placeholder="Label..."
               :canEdit="canEdit"
               @save="(val) => updateBlock(block.id, { content: val })"
+              @save-translation="(t) => updateBlockTranslation(block.id, block.content, t)"
             />
           </template>
 
@@ -197,33 +207,29 @@
       </div>
     </div>
 
-    <!-- Privacy Settings (owner/editor only) -->
+    <!-- Share & Privacy (owner/editor only) -->
     <div v-if="canEdit" class="detail-section privacy-section">
       <div class="detail-node privacy-node">
-        <div class="node-header">PRIVACY SETTINGS</div>
+        <div class="node-header">SHARE & PRIVACY</div>
+
         <div class="privacy-toggles">
-          <button
-            v-for="opt in privacyOptions"
-            :key="opt.value"
-            class="privacy-btn"
-            :class="{ active: currentPrivacy === opt.value }"
-            @click="setPrivacy(opt.value)"
-          >
+          <button v-for="opt in privacyOptions" :key="opt.value"
+            class="privacy-btn" :class="{ active: currentPrivacy === opt.value }"
+            @click="setPrivacy(opt.value)">
             <span class="privacy-icon">{{ opt.icon }}</span>
             <span class="privacy-label">{{ opt.label }}</span>
           </button>
         </div>
-        <div v-if="currentPrivacy === 'link_only' || currentPrivacy === 'public'" class="share-link">
-          <label>Share Link</label>
+
+        <!-- Shareable slug link -->
+        <div class="share-link" style="margin-top:12px">
+          <label>Shareable Link</label>
           <div class="share-link-row">
-            <input
-              :value="shareUrl"
-              readonly
-              class="share-input"
-              @click="copyShareLink"
-            />
-            <button class="copy-btn" @click="copyShareLink">Copy</button>
+            <input :value="slugUrl" readonly class="share-input" @click="copySlugLink" />
+            <button class="copy-btn" @click="copySlugLink">Copy</button>
+            <button class="copy-btn" style="background:var(--moss)" @click="regenerateSlug">↺</button>
           </div>
+          <div v-if="slugCopied" style="font-size:0.6rem;color:var(--moss-light);margin-top:3px">Copied!</div>
         </div>
       </div>
     </div>
@@ -231,19 +237,14 @@
     <!-- Members Management (owner only) -->
     <div v-if="isOwner" class="detail-section members-section">
       <div class="detail-node members-node">
-        <div class="node-header">MANAGE MEMBERS</div>
+        <div class="node-header">INVITE COLLABORATORS</div>
 
         <!-- Invite form -->
         <form @submit.prevent="inviteMember" class="invite-form">
-          <input
-            v-model="inviteEmail"
-            type="email"
-            placeholder="email@example.com"
-            class="invite-input"
-            required
-          />
+          <input v-model="inviteEmail" type="email" placeholder="email@example.com" class="invite-input" required />
           <select v-model="inviteRole" class="invite-role">
             <option value="viewer">Viewer</option>
+            <option value="commenter">Commenter</option>
             <option value="editor">Editor</option>
           </select>
           <button type="submit" class="invite-btn">Invite</button>
@@ -266,6 +267,7 @@
                 class="role-select"
               >
                 <option value="viewer">Viewer</option>
+                <option value="commenter">Commenter</option>
                 <option value="editor">Editor</option>
               </select>
               <button class="remove-member-btn" @click="removeMember(member.id)">&times;</button>
@@ -303,8 +305,9 @@ import { useContentBlocksStore } from '../stores/contentBlocksStore'
 import { useRealtimeStore } from '../stores/realtimeStore'
 import InlineEdit from './InlineEdit.vue'
 import LinkChip from './LinkChip.vue'
+import { queueTranslation, translateBlock, saveToGlossary } from '../lib/translationService'
 
-const { t, te } = useI18n()
+const { t, te, locale } = useI18n()
 
 const props = defineProps({
   project: { type: Object, required: true },
@@ -330,9 +333,8 @@ const currentPrivacy = ref(props.project.privacy || 'private')
 
 function displayText(value) {
   if (!value) return ''
-  if (typeof value === 'string' && value.includes('.') && te(value)) {
-    return t(value)
-  }
+  if (typeof value === 'object') return value[locale.value] ?? value['pt'] ?? value['en'] ?? ''
+  if (typeof value === 'string' && value.includes('.') && te(value)) return t(value)
   return value
 }
 
@@ -389,7 +391,20 @@ onUnmounted(() => {
 })
 
 async function saveField(field, value) {
-  await projectsStore.updateProject(props.project.id, { [field]: value })
+  // Merge into existing JSONB — only update the current locale's value
+  const current = (typeof props.project._raw?.[field] === 'object' && props.project._raw[field] !== null)
+    ? props.project._raw[field]
+    : {}
+  const merged = { ...current, [locale.value]: value }
+  await projectsStore.updateProject(props.project.id, { [field]: merged })
+  queueTranslation(props.project.id, field, value, locale.value)
+}
+
+async function saveTranslation(field, { lang, text }) {
+  const current = props.project._raw?.[field] ?? {}
+  await projectsStore.updateProject(props.project.id, { [field]: { ...current, [lang]: text } })
+  const sourceText = current[locale.value]
+  if (sourceText) saveToGlossary(sourceText, locale.value, text, lang)
 }
 
 function broadcastEditing(fieldKey, editing) {
@@ -418,7 +433,22 @@ async function addBlock(type) {
 }
 
 async function updateBlock(blockId, updates) {
-  await contentBlocksStore.updateBlock(blockId, props.project.id, updates)
+  // Wrap text content as JSONB so it matches the schema
+  const normalized = { ...updates }
+  if (typeof normalized.content === 'string') {
+    normalized.content = { [locale.value]: normalized.content }
+  }
+  await contentBlocksStore.updateBlock(blockId, props.project.id, normalized)
+  if (normalized.content) translateBlock(blockId, normalized.content, locale.value)
+}
+
+// Patches only the target lang in a block's content JSONB + saves to glossary
+async function updateBlockTranslation(blockId, currentContent, { lang, text }) {
+  const current = typeof currentContent === 'object' ? currentContent : {}
+  const updated = { ...current, [lang]: text }
+  await contentBlocksStore.updateBlock(blockId, props.project.id, { content: updated })
+  const sourceText = current[locale.value]
+  if (sourceText) saveToGlossary(sourceText, locale.value, text, lang)
 }
 
 async function deleteBlock(blockId) {

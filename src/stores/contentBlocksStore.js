@@ -39,21 +39,19 @@ export const useContentBlocksStore = defineStore('contentBlocks', {
 
     async addBlock(projectId, type, content, url = null) {
       if (!isSupabaseConfigured) return null
-      
+
       const existingBlocks = this.blocks[projectId] || []
       const position = existingBlocks.length
-
       const { data: { user } } = await supabase.auth.getUser()
+
+      // Wrap text content as JSONB {pt: ...} — translation fills other langs later
+      const contentValue = (type !== 'link' && content)
+        ? { pt: content }
+        : content
+
       const { data, error } = await supabase
         .from('project_content_blocks')
-        .insert({
-          project_id: projectId,
-          type,
-          content,
-          url,
-          position,
-          created_by: (await supabase.auth.getUser()).data.user?.id
-        })
+        .insert({ project_id: projectId, type, content: contentValue, url, position, created_by: user?.id })
         .select()
         .single()
 
@@ -63,9 +61,7 @@ export const useContentBlocksStore = defineStore('contentBlocks', {
         return null
       }
 
-      if (!this.blocks[projectId]) {
-        this.blocks[projectId] = []
-      }
+      if (!this.blocks[projectId]) this.blocks[projectId] = []
       this.blocks[projectId].push(data)
       return data
     },
