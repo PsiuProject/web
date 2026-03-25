@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://psiuproject.github.io/Web/",
+  "homepage": "https://psiuproject.github.io/web/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
