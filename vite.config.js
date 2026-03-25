@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
   plugins: [vue()],
-  base: '/web/',
+  base: '/Web/',
   build: {
     assetsDir: 'assets',
     assetsInlineLimit: 4096
