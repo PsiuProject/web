@@ -73,14 +73,8 @@
             @input="onCellTextInput(idx, $event)"
             @mouseup="updateCellToolbarPosition(idx)"
             @keyup="updateCellFormatState()"
-            @click.stop="
-              showCellToolbar = true
-              updateCellToolbarPosition(idx)
-            "
-            @dblclick.stop="
-              showCellToolbar = true
-              updateCellToolbarPosition(idx)
-            "
+            @click.stop="handleCellClick(idx)"
+            @dblclick.stop="handleCellDoubleClick(idx)"
             v-html="getCellHTML(cell)"
           />
           <div
@@ -941,6 +935,7 @@ function handleCellContextMenuAction(action) {
       const newColor = prompt('Enter color (hex):', cell.color || '#b55d3a')
       if (newColor) updateCell({ color: newColor })
       break
+    }
     case 'open-original':
     case 'test-link':
     case 'open-new-tab':
@@ -1337,6 +1332,16 @@ function decreaseCellFontSize() {
     saveCells(newCells)
     currentCellFontSize.value = newSize
   }
+}
+
+function handleCellClick(idx) {
+  showCellToolbar.value = true
+  updateCellToolbarPosition(idx)
+}
+
+function handleCellDoubleClick(idx) {
+  showCellToolbar.value = true
+  updateCellToolbarPosition(idx)
 }
 </script>
 

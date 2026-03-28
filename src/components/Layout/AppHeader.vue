@@ -99,14 +99,7 @@
             <strong>{{ auth.userName }}</strong>
             <small>{{ auth.userEmail }}</small>
           </div>
-          <button
-            @click="
-              auth.logout()
-              showUserMenu = false
-            "
-          >
-            Logout
-          </button>
+          <button @click="handleLogout">Logout</button>
         </div>
       </div>
 
@@ -443,6 +436,11 @@ async function createProject() {
   } finally {
     creating.value = false
   }
+}
+
+function handleLogout() {
+  auth.logout()
+  showUserMenu.value = false
 }
 </script>
 
